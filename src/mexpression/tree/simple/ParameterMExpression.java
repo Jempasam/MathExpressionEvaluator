@@ -1,18 +1,18 @@
-package equation.tree.simple;
+package mexpression.tree.simple;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import equation.tree.Equation;
+import mexpression.tree.MExpression;
 
-public class ParameterEquation implements Equation {
+public class ParameterMExpression implements MExpression {
 
 	
 	private String name;	
 	
 	
-	public ParameterEquation(String name) {
+	public ParameterMExpression(String name) {
 		super();
 		this.name=name;
 	}

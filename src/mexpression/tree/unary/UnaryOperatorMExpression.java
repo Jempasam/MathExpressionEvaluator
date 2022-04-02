@@ -1,14 +1,15 @@
-package equation.tree.unary;
+package mexpression.tree.unary;
 
 import java.util.Map;
 import java.util.function.DoubleUnaryOperator;
-import equation.tree.Equation;
 
-public class UnaryOperatorEquation extends UnaryEquation {
+import mexpression.tree.MExpression;
+
+public class UnaryOperatorMExpression extends UnaryMExpression {
 
 	private DoubleUnaryOperator operator;
 	
-	public UnaryOperatorEquation(Equation a, DoubleUnaryOperator operator) {
+	public UnaryOperatorMExpression(MExpression a, DoubleUnaryOperator operator) {
 		super(a, operator.getClass().getSimpleName()+"(",")");
 		this.operator=operator;
 	}

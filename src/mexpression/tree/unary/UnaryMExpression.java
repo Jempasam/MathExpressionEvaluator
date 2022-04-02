@@ -1,17 +1,17 @@
-package equation.tree.unary;
+package mexpression.tree.unary;
 
 import java.util.List;
 
-import equation.tree.Equation;
+import mexpression.tree.MExpression;
 
-public abstract class UnaryEquation implements Equation{
+public abstract class UnaryMExpression implements MExpression{
 
 	
-	protected Equation a;
+	protected MExpression a;
 	private String visual;
 	
 	
-	public UnaryEquation(Equation a, String before, String after) {
+	public UnaryMExpression(MExpression a, String before, String after) {
 		super();
 		this.a = a;
 		this.visual=before+a.getVisual()+after;

@@ -1,19 +1,19 @@
-package equation.tree.simple;
+package mexpression.tree.simple;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import equation.tree.Equation;
+import mexpression.tree.MExpression;
 
-public class NumberEquation implements Equation {
+public class NumberMExpression implements MExpression {
 	
 	
 	private double value;
 	private String visual;
 	
 	
-	public NumberEquation(double value) {
+	public NumberMExpression(double value) {
 		super();
 		this.value = value;
 		this.visual = Double.toString(value);

@@ -1,18 +1,18 @@
-package equation.tree.binary;
+package mexpression.tree.binary;
 
 import java.util.List;
 
-import equation.tree.Equation;
+import mexpression.tree.MExpression;
 
-public abstract class BinaryEquation implements Equation{
+public abstract class BinaryMExpression implements MExpression{
 
 	
-	protected Equation a;
-	protected Equation b;
+	protected MExpression a;
+	protected MExpression b;
 	private String visual;
 	
 	
-	public BinaryEquation(Equation a, Equation b, String sign) {
+	public BinaryMExpression(MExpression a, MExpression b, String sign) {
 		super();
 		this.a = a;
 		this.b = b;
