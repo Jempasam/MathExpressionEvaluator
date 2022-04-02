@@ -1,10 +1,10 @@
-package mexpression.tree.simple;
+package jempasam.mexpression.tree.simple;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import mexpression.tree.MExpression;
+import jempasam.mexpression.tree.MExpression;
 
 public class NumberMExpression implements MExpression {
 	

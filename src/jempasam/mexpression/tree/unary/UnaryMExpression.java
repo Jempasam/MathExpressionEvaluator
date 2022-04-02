@@ -1,8 +1,8 @@
-package mexpression.tree.unary;
+package jempasam.mexpression.tree.unary;
 
 import java.util.List;
 
-import mexpression.tree.MExpression;
+import jempasam.mexpression.tree.MExpression;
 
 public abstract class UnaryMExpression implements MExpression{
 

@@ -1,8 +1,8 @@
-package mexpression.tree.binary;
+package jempasam.mexpression.tree.binary;
 
 import java.util.Map;
 
-import mexpression.tree.MExpression;
+import jempasam.mexpression.tree.MExpression;
 
 public class SubstractMExpression extends BinaryMExpression {
 

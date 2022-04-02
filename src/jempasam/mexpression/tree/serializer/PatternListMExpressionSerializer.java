@@ -1,4 +1,4 @@
-package mexpression.tree.serializer;
+package jempasam.mexpression.tree.serializer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-import mexpression.tree.builder.MExpressionTerm;
-import mexpression.tree.serializer.MExpressionSerializer.MExpressionSerializerException;
+import jempasam.mexpression.tree.builder.MExpressionTerm;
+import jempasam.mexpression.tree.serializer.MExpressionSerializer.MExpressionSerializerException;
 
 public class PatternListMExpressionSerializer implements MExpressionSerializer{
 	
@@ -46,8 +46,6 @@ public class PatternListMExpressionSerializer implements MExpressionSerializer{
 	
 	private Function<String,MExpressionTerm> getgenerator(String word){
 		for(Pair e : registreds) {
-			System.out.println("aa");
-			System.out.println(e.pattern+":"+word);
 			if(e.pattern.matcher(word).find()) {
 				return e.converter;
 			}

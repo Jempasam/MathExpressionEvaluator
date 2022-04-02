@@ -1,14 +1,14 @@
-package mexpression.tree.builder;
+package jempasam.mexpression.tree.builder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import mexpression.tree.MExpression;
+import jempasam.mexpression.tree.MExpression;
 
 public class MExpressionBuilder {
 	
-	public MExpression compile(List<MExpressionTerm> mexpression) throws MExpressionBuilderException{
+	public MExpression compile(List<MExpressionTerm> jempasam.mexpression) throws MExpressionBuilderException{
 		List<CompleteTerm> compiled=new ArrayList<>();
 		
 		// Compile
@@ -91,8 +91,8 @@ public class MExpressionBuilder {
 		return new CompleteTerm(term.getPriority()+depth*100000, place, term, null);
 	}
 	
-	private CompleteTerm cterm(MExpression mexpression) {
-		return new CompleteTerm(0, 0, null, mexpression);
+	private CompleteTerm cterm(MExpression jempasam.mexpression) {
+		return new CompleteTerm(0, 0, null, jempasam.mexpression);
 	}
 	
 	

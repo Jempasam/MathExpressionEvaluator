@@ -1,9 +1,9 @@
-package mexpression.tree.unary;
+package jempasam.mexpression.tree.unary;
 
 import java.util.Map;
 import java.util.function.DoubleUnaryOperator;
 
-import mexpression.tree.MExpression;
+import jempasam.mexpression.tree.MExpression;
 
 public class UnaryOperatorMExpression extends UnaryMExpression {
 

@@ -1,20 +1,20 @@
-package mexpression.tree.builder;
+package jempasam.mexpression.tree.builder;
 
 import java.util.List;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.UnaryOperator;
 
-import mexpression.tree.MExpression;
-import mexpression.tree.binary.AdditionMExpression;
-import mexpression.tree.binary.DivideMExpression;
-import mexpression.tree.binary.MultiplyMExpression;
-import mexpression.tree.binary.PowerMExpression;
-import mexpression.tree.binary.SubstractMExpression;
-import mexpression.tree.simple.NumberMExpression;
-import mexpression.tree.simple.ParameterMExpression;
-import mexpression.tree.unary.AbsoluteMExpression;
-import mexpression.tree.unary.SquareRootMExpression;
-import mexpression.tree.unary.UnaryOperatorMExpression;
+import jempasam.mexpression.tree.MExpression;
+import jempasam.mexpression.tree.binary.AdditionMExpression;
+import jempasam.mexpression.tree.binary.DivideMExpression;
+import jempasam.mexpression.tree.binary.MultiplyMExpression;
+import jempasam.mexpression.tree.binary.PowerMExpression;
+import jempasam.mexpression.tree.binary.SubstractMExpression;
+import jempasam.mexpression.tree.simple.NumberMExpression;
+import jempasam.mexpression.tree.simple.ParameterMExpression;
+import jempasam.mexpression.tree.unary.AbsoluteMExpression;
+import jempasam.mexpression.tree.unary.SquareRootMExpression;
+import jempasam.mexpression.tree.unary.UnaryOperatorMExpression;
 
 public interface MExpressionTerm {
 	public int[] getArgumentsPlaces();

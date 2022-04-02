@@ -1,8 +1,8 @@
-package mexpression.tree.unary;
+package jempasam.mexpression.tree.unary;
 
 import java.util.Map;
 
-import mexpression.tree.MExpression;
+import jempasam.mexpression.tree.MExpression;
 
 public class SquareRootMExpression extends UnaryMExpression {
 
