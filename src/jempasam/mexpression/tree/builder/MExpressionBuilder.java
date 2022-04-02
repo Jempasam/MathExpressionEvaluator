@@ -8,7 +8,7 @@ import jempasam.mexpression.tree.MExpression;
 
 public class MExpressionBuilder {
 	
-	public MExpression compile(List<MExpressionTerm> jempasam.mexpression) throws MExpressionBuilderException{
+	public MExpression compile(List<MExpressionTerm> mexpression) throws MExpressionBuilderException{
 		List<CompleteTerm> compiled=new ArrayList<>();
 		
 		// Compile
@@ -91,8 +91,8 @@ public class MExpressionBuilder {
 		return new CompleteTerm(term.getPriority()+depth*100000, place, term, null);
 	}
 	
-	private CompleteTerm cterm(MExpression jempasam.mexpression) {
-		return new CompleteTerm(0, 0, null, jempasam.mexpression);
+	private CompleteTerm cterm(MExpression mexpression) {
+		return new CompleteTerm(0, 0, null, mexpression);
 	}
 	
 	

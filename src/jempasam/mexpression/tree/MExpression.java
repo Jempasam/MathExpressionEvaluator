@@ -1,18 +1,13 @@
 package jempasam.mexpression.tree;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jempasam.swj.textanalyzis.tokenizer.Tokenizer;
-import jempasam.swj.textanalyzis.tokenizer.impl.InputStreamSimpleTokenizer;
 import jempasam.mexpression.tree.builder.MExpressionBuilder;
-import jempasam.mexpression.tree.builder.MExpressionTerm;
 import jempasam.mexpression.tree.builder.MExpressionBuilder.MExpressionBuilderException;
+import jempasam.mexpression.tree.builder.MExpressionTerm;
 import jempasam.mexpression.tree.serializer.MExpressionSerializer;
 import jempasam.mexpression.tree.serializer.MExpressionSerializer.MExpressionSerializerException;
 
@@ -28,10 +23,12 @@ public interface MExpression {
 			System.out.println("String: "+equation);
 			
 			// Tokenizer from STR to TOKENS
-			Tokenizer tokenizer=new InputStreamSimpleTokenizer(new ByteArrayInputStream(equation.getBytes()), " ", "+-*/()^", "");
+			/*Tokenizer tokenizer=new InputStreamSimpleTokenizer(new ByteArrayInputStream(equation.getBytes()), " ", "+-/*()^", "");
 			List<String> s=new ArrayList<>();
 			while(tokenizer.hasNext())s.add(tokenizer.next());
-			String str[]=s.toArray(new String[0]);
+			String str[]=s.toArray(new String[0]);*/
+			String str[]=new String[] {"2","*","(","X","+","5",")"};
+			
 			System.out.println("Tokens: "+Arrays.toString(str));
 			
 			// From TOKENS to LIST
@@ -41,7 +38,7 @@ public interface MExpression {
 			
 			// From LIST to EQUATION
 			MExpressionBuilder builder=new MExpressionBuilder();
-			MExpression jempasam.mexpression=builder.compile(terms);
+			MExpression mexpression=builder.compile(terms);
 			System.out.println("Equation: "+mexpression.getVisual());
 			
 			// Use EQUATION
