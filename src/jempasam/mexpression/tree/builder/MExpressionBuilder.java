@@ -2,15 +2,34 @@ package jempasam.mexpression.tree.builder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.Supplier;
 
 import jempasam.mexpression.tree.MExpression;
 
 public class MExpressionBuilder {
 	
+	private Iterable<Integer> range(int min, int max, int direction){
+		return new Iterable<Integer>(){
+			@Override
+			public Iterator<Integer> iterator() {
+				return new Iterator<Integer>() {
+					 int a;
+					 int end;
+					 {
+						 if(direction==1) { a=min-1; end=max; }
+						 else{ a=max+1; end=min;  }
+					 }
+					public boolean hasNext() { return a!=end; }
+					public Integer next() { a+=direction; return a; }
+				};
+			}
+		};
+	}
+	
 	public MExpression compile(List<MExpressionTerm> mexpression) throws MExpressionBuilderException{
 		List<CompleteTerm> compiled=new ArrayList<>();
-		
 		// Compile
 		int depth=0;
 		for(int i=0; i<mexpression.size(); i++) {
@@ -27,13 +46,35 @@ public class MExpressionBuilder {
 		
 		// Create Equation From Compiled
 		while(compiled.size()>1 || !compiled.get(0).isResult()) {
-			// Get max priority
-			int maxpriority=0;
+			// Get max priority and direction
+			int maxpriority=Integer.MIN_VALUE+1;
+			int direction=1;
 			for(CompleteTerm t : compiled) {
-				if(t.priority>maxpriority)maxpriority=t.priority;
+				if(t.priority>maxpriority) {
+					maxpriority=t.priority;
+					direction=t.term.getDirection();
+				}
+				else if(t.priority==maxpriority && direction != t.term.getDirection()){
+					throw new MExpressionBuilderException("Operator direction incoherence between "+direction+" and "+t.term.getDirection()+" for priority "+maxpriority, t.place, t.term);
+				}
 			}
+			
+			if(maxpriority==Integer.MIN_VALUE+1) {
+				throw new MExpressionBuilderException("Invalid Expression, operators are probably missing.", 0, null);
+			}
+			
 			// Execute EquationTerms
-			for(int i=0; i<compiled.size(); i++) {
+			int i=0;
+			Supplier<Integer> end;
+			if(direction==1) {
+				i=0;
+				end=()->compiled.size();
+			}
+			else {
+				i=compiled.size()-1;
+				end=()->-1;
+			}
+			for(; i!=end.get(); i+=direction) {
 				CompleteTerm term=compiled.get(i);
 				
 				// Only the max priority
@@ -61,7 +102,7 @@ public class MExpressionBuilder {
 				Arrays.sort(arg_pos);
 				for(int y=arg_pos.length-1; y>=0; y--) compiled.remove(arg_pos[y]);
 				compiled.add(arg_pos[0], cterm(result));
-				i-=arg_offset.length;
+				if(direction==1)i-=arg_offset.length;
 			}
 		}
 		return compiled.get(0).result;
@@ -92,7 +133,7 @@ public class MExpressionBuilder {
 	}
 	
 	private CompleteTerm cterm(MExpression mexpression) {
-		return new CompleteTerm(0, 0, null, mexpression);
+		return new CompleteTerm(Integer.MIN_VALUE, 0, null, mexpression);
 	}
 	
 	
@@ -103,7 +144,7 @@ public class MExpressionBuilder {
 		private MExpressionTerm term;
 		
 		public MExpressionBuilderException(String message, int position, MExpressionTerm term) {
-			super(message);
+			super("At "+position+" term \""+term+"\": "+message);
 			this.position=position;
 			this.term=term;
 		}

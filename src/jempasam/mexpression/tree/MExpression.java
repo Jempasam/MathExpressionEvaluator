@@ -22,12 +22,7 @@ public interface MExpression {
 			String equation="2*(X+5)";
 			System.out.println("String: "+equation);
 			
-			// Tokenizer from STR to TOKENS
-			/*Tokenizer tokenizer=new InputStreamSimpleTokenizer(new ByteArrayInputStream(equation.getBytes()), " ", "+-/*()^", "");
-			List<String> s=new ArrayList<>();
-			while(tokenizer.hasNext())s.add(tokenizer.next());
-			String str[]=s.toArray(new String[0]);*/
-			String str[]=new String[] {"2","*","(","X","+","5",")",">","20","or","1"};
+			String str[]=new String[] {"1","1"};
 			
 			System.out.println("Tokens: "+Arrays.toString(str));
 			
