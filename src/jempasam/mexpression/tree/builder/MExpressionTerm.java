@@ -46,6 +46,10 @@ public interface MExpressionTerm {
 	
 	public static MExpressionTerm E=of(Math.E);
 	
+	public static MExpressionTerm TRUE=of(1d);
+	
+	public static MExpressionTerm FALSE=of(0d);
+	
 	
 	public static MExpressionTerm of(String name) {
 		return new MExpressionTerm() {
@@ -59,9 +63,9 @@ public interface MExpressionTerm {
 	
 	public static MExpressionTerm of(DoubleUnaryOperator operator) {
 		return new MExpressionTerm() {
-			public int getPriority() { return 1000; }
+			public int getPriority() { return 800; }
 			public int getDirection() { return -1; }
-			public int[] getArgumentsPlaces() { return new int[0]; }
+			public int[] getArgumentsPlaces() { return new int[]{1}; }
 			public MExpression from(List<MExpression> args) { return new UnaryOperatorMExpression(args.get(0),operator); }
 			public String toString() {return "operator  "+operator.toString();}
 		};
@@ -138,7 +142,7 @@ public interface MExpressionTerm {
 		public int getPriority() { return 800; }
 		public int getDirection() { return -1; }
 		public int[] getArgumentsPlaces() { return new int[] {1,2}; }
-		public MExpression from(List<MExpression> args) { return new MaxMExpression(args.get(0),args.get(1)); }
+		public MExpression from(List<MExpression> args) { return new MinMExpression(args.get(0),args.get(1)); }
 		public String toString() {return "min";}
 	};
 	
