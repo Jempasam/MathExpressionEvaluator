@@ -146,6 +146,14 @@ public interface MExpressionTerm {
 		public String toString() {return "min";}
 	};
 	
+	public static MExpressionTerm MIDDLE=new MExpressionTerm() {
+		public int getPriority() { return 800; }
+		public int getDirection() { return -1; }
+		public int[] getArgumentsPlaces() { return new int[] {1,2}; }
+		public MExpression from(List<MExpression> args) { return new MiddleMExpression(args.get(0),args.get(1)); }
+		public String toString() {return "mid";}
+	};
+	
 	// Unary Operator
 	public static MExpressionTerm FACTORIAL=new MExpressionTerm() {
 		public int getPriority() { return 850; }
