@@ -32,6 +32,16 @@ public interface MExpressionTerm {
 	};
 	
 	// Simple Operator
+	public static MExpressionTerm derivative(String param) {
+		return new MExpressionTerm() {
+			public int getPriority() { return 1000; }
+			public int getDirection() { return 1; }
+			public int[] getArgumentsPlaces() { return new int[] {-1}; }
+			public MExpression from(List<MExpression> args) { return new DerivativeMExpression(args.get(0),param); }
+			public String toString() {return "derivative with respect to "+param;}
+		};
+	}
+	
 	public static MExpressionTerm of(double v) {
 		return new MExpressionTerm() {
 			public int getPriority() { return 1000; }

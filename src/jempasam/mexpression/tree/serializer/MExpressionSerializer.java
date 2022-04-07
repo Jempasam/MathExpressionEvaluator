@@ -75,6 +75,8 @@ public interface MExpressionSerializer {
 		ret.register(Pattern.compile("^\\-?[0-9]+.?[0-9]*$"), (str)->MExpressionTerm.of(Double.parseDouble(str)));
 		ret.register(Pattern.compile("^[A-Z]$"), (str)->MExpressionTerm.of(str));
 		
+		ret.register(Pattern.compile("^[A-Z]'$"), (str)->MExpressionTerm.derivative(str.substring(0, str.length()-1)));
+		
 		return ret;
 	}
 }

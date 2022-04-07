@@ -8,7 +8,7 @@ import jempasam.mexpression.tree.unary.UnaryMExpression;
 public class NotMExpression extends UnaryMExpression {
 
 	public NotMExpression(MExpression a) {
-		super(a, "!","");
+		super(a, "not(",")");
 	}
 	
 	@Override

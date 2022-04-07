@@ -26,4 +26,9 @@ public abstract class UnaryMExpression implements MExpression{
 	public String getVisual() {
 		return visual;
 	}
+	
+	@Override
+	public String toString() {
+		return visual;
+	}
 }
