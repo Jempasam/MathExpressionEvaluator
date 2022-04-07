@@ -27,7 +27,7 @@ public interface MExpression {
 			System.out.println("Tokens: "+Arrays.toString(str));
 			
 			// From TOKENS to LIST
-			MExpressionSerializer serializer=MExpressionSerializer.createBaseMExpressionSerializer();
+			MExpressionSerializer serializer=MExpressions.createBaseMExpressionSerializer();
 			List<MExpressionTerm> terms=serializer.serialize(Arrays.stream(str).iterator());
 			System.out.println("Terms: "+terms);
 			
