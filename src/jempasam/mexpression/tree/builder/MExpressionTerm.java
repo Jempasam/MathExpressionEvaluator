@@ -146,8 +146,15 @@ public interface MExpressionTerm {
 		public String toString() {return "min";}
 	};
 	
-	
 	// Unary Operator
+	public static MExpressionTerm FACTORIAL=new MExpressionTerm() {
+		public int getPriority() { return 850; }
+		public int getDirection() { return 1; }
+		public int[] getArgumentsPlaces() { return new int[] {-1}; }
+		public MExpression from(List<MExpression> args) { return new FactorialMExpression(args.get(0)); }
+		public String toString() {return "!";}
+	};
+	
 	public static MExpressionTerm ABSOLUTE=new MExpressionTerm() {
 		public int getPriority() { return 800; }
 		public int getDirection() { return -1; }

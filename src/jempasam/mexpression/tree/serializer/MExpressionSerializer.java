@@ -49,6 +49,8 @@ public interface MExpressionSerializer {
 		ret.register(Pattern.compile("^max$"), MExpressionTerm.MAX);
 		ret.register(Pattern.compile("^min$"), MExpressionTerm.MIN);
 		
+		ret.register(Pattern.compile("^!$"), MExpressionTerm.FACTORIAL);
+		
 		ret.register(Pattern.compile("^exp$"), MExpressionTerm.EXP);
 		ret.register(Pattern.compile("^log$"), MExpressionTerm.LOG);
 		ret.register(Pattern.compile("^log10$"), MExpressionTerm.LOG10);
