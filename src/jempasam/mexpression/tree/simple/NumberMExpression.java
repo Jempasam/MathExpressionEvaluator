@@ -1,8 +1,9 @@
 package jempasam.mexpression.tree.simple;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import jempasam.mexpression.tree.MExpression;
 
@@ -26,8 +27,8 @@ public class NumberMExpression implements MExpression {
 	}
 	
 	@Override
-	public List<String> getParameters() {
-		return new ArrayList<>();
+	public Set<String> getParameters() {
+		return new HashSet<>();
 	}
 	
 	@Override

@@ -1,8 +1,10 @@
 package jempasam.mexpression.tree.builder;
 
 import java.util.List;
+import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleUnaryOperator;
 import jempasam.mexpression.tree.MExpression;
+import jempasam.mexpression.tree.SumMExpression;
 import jempasam.mexpression.tree.binary.*;
 import jempasam.mexpression.tree.bool.*;
 import jempasam.mexpression.tree.simple.*;
@@ -42,6 +44,16 @@ public interface MExpressionTerm {
 		};
 	}
 	
+	public static MExpressionTerm sum(String param) {
+		return new MExpressionTerm() {
+			public int getPriority() { return 550; }
+			public int getDirection() { return -1; }
+			public int[] getArgumentsPlaces() { return new int[] {1,2,3}; }
+			public MExpression from(List<MExpression> args) { return new SumMExpression(param, args.get(0), args.get(1), args.get(2)); }
+			public String toString() {return "sum with "+param;}
+		};
+	}
+	
 	public static MExpressionTerm of(double v) {
 		return new MExpressionTerm() {
 			public int getPriority() { return 1000; }
@@ -51,13 +63,9 @@ public interface MExpressionTerm {
 			public String toString() {return "number "+Double.toString(v);}
 		};
 	}
-	
 	public static MExpressionTerm PI=of(Math.PI);
-	
 	public static MExpressionTerm E=of(Math.E);
-	
 	public static MExpressionTerm TRUE=of(1d);
-	
 	public static MExpressionTerm FALSE=of(0d);
 	
 	
@@ -77,27 +85,30 @@ public interface MExpressionTerm {
 			public int getDirection() { return -1; }
 			public int[] getArgumentsPlaces() { return new int[]{1}; }
 			public MExpression from(List<MExpression> args) { return new UnaryOperatorMExpression(args.get(0),operator); }
-			public String toString() {return "operator  "+operator.toString();}
+			public String toString() {return operator.toString();}
 		};
 	}
-	
 	public static MExpressionTerm COS=of(Math::cos);
 	public static MExpressionTerm ARCCOS=of(Math::acos);
-	
 	public static MExpressionTerm SIN=of(Math::sin);
 	public static MExpressionTerm ARCSIN=of(Math::asin);
-	
 	public static MExpressionTerm TAN=of(Math::tan);
 	public static MExpressionTerm ARCTAN=of(Math::atan);
-	
 	public static MExpressionTerm EXP=of(Math::exp);
 	public static MExpressionTerm LOG=of(Math::log);
-	
 	public static MExpressionTerm FLOOR=of(Math::floor);
 	public static MExpressionTerm CEIL=of(Math::ceil);
-	
 	public static MExpressionTerm LOG10=of(Math::log10);
 	
+	public static MExpressionTerm of(DoubleBinaryOperator operator) {
+		return new MExpressionTerm() {
+			public int getPriority() { return 800; }
+			public int getDirection() { return -1; }
+			public int[] getArgumentsPlaces() { return new int[]{1}; }
+			public MExpression from(List<MExpression> args) { return new BinaryOperatorMExpression(operator,args.get(0),args.get(1)); }
+			public String toString() {return operator.toString();}
+		};
+	}
 	
 	// Binary Operator
 	public static MExpressionTerm MULTIPLY=new MExpressionTerm() {

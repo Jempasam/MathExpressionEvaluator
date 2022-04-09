@@ -59,9 +59,10 @@ public class MExpressions {
 		ret.register(Pattern.compile("^not$"), MExpressionTerm.NOT);
 		
 		ret.register(Pattern.compile("^\\-?[0-9]+.?[0-9]*$"), (str)->MExpressionTerm.of(Double.parseDouble(str)));
-		ret.register(Pattern.compile("^[A-Z]$"), (str)->MExpressionTerm.of(str));
+		ret.register(Pattern.compile("^[a-zA-Z]$"), (str)->MExpressionTerm.of(str));
 		
-		ret.register(Pattern.compile("^[A-Z]'$"), (str)->MExpressionTerm.derivative(str.substring(0, str.length()-1)));
+		ret.register(Pattern.compile("^Sum:[a-zA-Z]$"), (str)->MExpressionTerm.sum(str.substring(4, 5)));
+		ret.register(Pattern.compile("^[a-zA-Z]'$"), (str)->MExpressionTerm.derivative(str.substring(0, str.length()-1)));
 		
 		return ret;
 	}

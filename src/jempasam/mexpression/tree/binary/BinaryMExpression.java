@@ -1,6 +1,6 @@
 package jempasam.mexpression.tree.binary;
 
-import java.util.List;
+import java.util.Set;
 
 import jempasam.mexpression.tree.MExpression;
 
@@ -20,8 +20,8 @@ public abstract class BinaryMExpression implements MExpression{
 	}
 	
 	@Override
-	public List<String> getParameters() {
-		List<String> ret=a.getParameters();
+	public Set<String> getParameters() {
+		Set<String> ret=a.getParameters();
 		ret.addAll(b.getParameters());
 		return ret;
 	}

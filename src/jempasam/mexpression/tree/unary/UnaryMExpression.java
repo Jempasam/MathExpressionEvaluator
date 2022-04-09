@@ -1,6 +1,6 @@
 package jempasam.mexpression.tree.unary;
 
-import java.util.List;
+import java.util.Set;
 
 import jempasam.mexpression.tree.MExpression;
 
@@ -18,7 +18,7 @@ public abstract class UnaryMExpression implements MExpression{
 	}
 	
 	@Override
-	public List<String> getParameters() {
+	public Set<String> getParameters() {
 		return a.getParameters();
 	}
 	

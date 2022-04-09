@@ -22,6 +22,7 @@ public class DerivativeMExpression extends UnaryMExpression {
 		double aa=a.get(parameters);
 		parameters.put(variable, to);
 		double bb=a.get(parameters);
+		parameters.put(variable, from);
 		
 		return (bb-aa)/offset;
 	}

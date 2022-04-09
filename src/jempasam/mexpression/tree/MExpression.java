@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import jempasam.mexpression.tree.builder.MExpressionBuilder;
 import jempasam.mexpression.tree.builder.MExpressionBuilder.MExpressionBuilderException;
@@ -15,7 +16,7 @@ public interface MExpression {
 	
 	double get(Map<String, Double> parameters);
 	String getVisual();
-	List<String> getParameters();
+	Set<String> getParameters();
 	
 	public static void main(String[] args) {
 		try {
