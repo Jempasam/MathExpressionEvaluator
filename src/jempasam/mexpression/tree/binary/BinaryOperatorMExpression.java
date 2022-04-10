@@ -2,16 +2,19 @@ package jempasam.mexpression.tree.binary;
 
 import java.util.Map;
 import java.util.function.DoubleBinaryOperator;
-
 import jempasam.mexpression.tree.MExpression;
 
 public class BinaryOperatorMExpression extends BinaryMExpression {
 	
 	private DoubleBinaryOperator operator;
-
-	public BinaryOperatorMExpression(DoubleBinaryOperator operator, MExpression a, MExpression b) {
-		super(a, b, "+");
+	
+	public BinaryOperatorMExpression(MExpression a, MExpression b,DoubleBinaryOperator operator, String visual) {
+		super(a, b, visual);
 		this.operator=operator;
+	}
+	
+	public BinaryOperatorMExpression(MExpression a, MExpression b, DoubleBinaryOperator operator) {
+		this(a, b, operator, " "+operator.getClass().getSimpleName()+" ");
 	}
 	
 	@Override

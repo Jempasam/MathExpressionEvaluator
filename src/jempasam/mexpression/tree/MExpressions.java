@@ -16,6 +16,7 @@ public class MExpressions {
 		ret.register(Pattern.compile("^\\*$"), MExpressionTerm.MULTIPLY);
 		ret.register(Pattern.compile("^\\/$"), MExpressionTerm.DIVIDE);
 		ret.register(Pattern.compile("^\\^$"), MExpressionTerm.POWER);
+		ret.register(Pattern.compile("^\\%$"), MExpressionTerm.MODULO);
 		
 		ret.register(Pattern.compile("^e$"), MExpressionTerm.E);
 		ret.register(Pattern.compile("^pi$"), MExpressionTerm.PI);

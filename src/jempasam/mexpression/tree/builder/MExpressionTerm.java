@@ -79,35 +79,42 @@ public interface MExpressionTerm {
 		};
 	}
 	
-	public static MExpressionTerm of(DoubleUnaryOperator operator) {
+	public static MExpressionTerm of(DoubleUnaryOperator operator, String visual) {
 		return new MExpressionTerm() {
 			public int getPriority() { return 800; }
 			public int getDirection() { return -1; }
 			public int[] getArgumentsPlaces() { return new int[]{1}; }
-			public MExpression from(List<MExpression> args) { return new UnaryOperatorMExpression(args.get(0),operator); }
+			public MExpression from(List<MExpression> args) { return new UnaryOperatorMExpression(args.get(0),operator,visual); }
 			public String toString() {return operator.toString();}
 		};
 	}
-	public static MExpressionTerm COS=of(Math::cos);
-	public static MExpressionTerm ARCCOS=of(Math::acos);
-	public static MExpressionTerm SIN=of(Math::sin);
-	public static MExpressionTerm ARCSIN=of(Math::asin);
-	public static MExpressionTerm TAN=of(Math::tan);
-	public static MExpressionTerm ARCTAN=of(Math::atan);
-	public static MExpressionTerm EXP=of(Math::exp);
-	public static MExpressionTerm LOG=of(Math::log);
-	public static MExpressionTerm FLOOR=of(Math::floor);
-	public static MExpressionTerm CEIL=of(Math::ceil);
-	public static MExpressionTerm LOG10=of(Math::log10);
+	public static MExpressionTerm of(DoubleUnaryOperator operator) {
+		return of(operator,operator.getClass().getSimpleName());
+	}
 	
-	public static MExpressionTerm of(DoubleBinaryOperator operator) {
+	public static MExpressionTerm COS=of(Math::cos,"cos");
+	public static MExpressionTerm ARCCOS=of(Math::acos,"arccos");
+	public static MExpressionTerm SIN=of(Math::sin,"sin");
+	public static MExpressionTerm ARCSIN=of(Math::asin,"arcsin");
+	public static MExpressionTerm TAN=of(Math::tan,"tan");
+	public static MExpressionTerm ARCTAN=of(Math::atan,"arctan");
+	public static MExpressionTerm EXP=of(Math::exp,"exp");
+	public static MExpressionTerm LOG=of(Math::log,"log");
+	public static MExpressionTerm FLOOR=of(Math::floor,"floor");
+	public static MExpressionTerm CEIL=of(Math::ceil,"ceil");
+	public static MExpressionTerm LOG10=of(Math::log10,"log10");
+	
+	public static MExpressionTerm of(DoubleBinaryOperator operator, String visual) {
 		return new MExpressionTerm() {
 			public int getPriority() { return 800; }
 			public int getDirection() { return -1; }
 			public int[] getArgumentsPlaces() { return new int[]{1}; }
-			public MExpression from(List<MExpression> args) { return new BinaryOperatorMExpression(operator,args.get(0),args.get(1)); }
+			public MExpression from(List<MExpression> args) { return new BinaryOperatorMExpression(args.get(0),args.get(1),operator, visual); }
 			public String toString() {return operator.toString();}
 		};
+	}
+	public static MExpressionTerm of(DoubleBinaryOperator operator) {
+		return of(operator," "+operator.getClass().getSimpleName()+" ");
 	}
 	
 	// Binary Operator
@@ -116,6 +123,13 @@ public interface MExpressionTerm {
 		public int getDirection() { return 1; }
 		public int[] getArgumentsPlaces() { return new int[] {-1,1}; }
 		public MExpression from(List<MExpression> args) { return new MultiplyMExpression(args.get(0),args.get(1)); }
+		public String toString() {return "multiply";}
+	};
+	public static MExpressionTerm MODULO=new MExpressionTerm() {
+		public int getPriority() { return 650; }
+		public int getDirection() { return 1; }
+		public int[] getArgumentsPlaces() { return new int[] {-1,1}; }
+		public MExpression from(List<MExpression> args) { return new ModuloMExpression(args.get(0),args.get(1)); }
 		public String toString() {return "multiply";}
 	};
 	

@@ -9,9 +9,14 @@ public class UnaryOperatorMExpression extends UnaryMExpression {
 
 	private DoubleUnaryOperator operator;
 	
-	public UnaryOperatorMExpression(MExpression a, DoubleUnaryOperator operator) {
-		super(a, operator.getClass().getSimpleName()+"(",")");
+	
+	public UnaryOperatorMExpression(MExpression a, DoubleUnaryOperator operator, String visual) {
+		super(a, visual+"(",")");
 		this.operator=operator;
+	}
+	
+	public UnaryOperatorMExpression(MExpression a, DoubleUnaryOperator operator) {
+		this(a,operator, operator.getClass().getSimpleName());
 	}
 	
 	@Override
