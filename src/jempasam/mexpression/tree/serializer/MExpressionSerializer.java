@@ -2,9 +2,8 @@ package jempasam.mexpression.tree.serializer;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
 
-import jempasam.mexpression.tree.builder.MExpressionTerm;
+import jempasam.mexpression.tree.builder.term.MExpressionTerm;
 
 public interface MExpressionSerializer {
 	public List<MExpressionTerm> serialize(Iterator<String> words)  throws MExpressionSerializerException;

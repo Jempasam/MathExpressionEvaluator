@@ -1,12 +1,16 @@
 package jempasam.mexpression.tree.builder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import jempasam.mexpression.tree.MExpression;
+import jempasam.mexpression.tree.builder.term.MExpressionTerm;
+import jempasam.mexpression.tree.builder.term.MExpressionTermArgument;
+import jempasam.mexpression.tree.builder.term.MExpressionTerms;
+import jempasam.mexpression.tree.doubletype.DoubleMExpression;
 
 public class MExpressionBuilder {
 	
@@ -28,14 +32,16 @@ public class MExpressionBuilder {
 		};
 	}
 	
-	public MExpression compile(List<MExpressionTerm> mexpression) throws MExpressionBuilderException{
+	public MExpression<?> compile(List<MExpressionTerm> mexpression) throws MExpressionBuilderException{
+		
 		List<CompleteTerm> compiled=new ArrayList<>();
+		
 		// Compile
 		int depth=0;
 		for(int i=0; i<mexpression.size(); i++) {
 			MExpressionTerm e=mexpression.get(i);
-			if(e==MExpressionTerm.OPEN)depth++;
-			else if(e==MExpressionTerm.CLOSE) {
+			if(e==MExpressionTerms.OPEN)depth++;
+			else if(e==MExpressionTerms.CLOSE) {
 				if(depth<=0)throw new MExpressionBuilderException("Not opened parenthesis has been closed", i, e);
 				depth--;
 			}
@@ -46,7 +52,9 @@ public class MExpressionBuilder {
 		
 		// Create Equation From Compiled
 		while(compiled.size()>1 || !compiled.get(0).isResult()) {
-			// Get max priority and direction
+			System.out.println(compiled);
+			
+			// Get max priority and direction: direction ,maxpriority
 			int maxpriority=Integer.MIN_VALUE+1;
 			int direction=1;
 			for(CompleteTerm t : compiled) {
@@ -58,12 +66,11 @@ public class MExpressionBuilder {
 					throw new MExpressionBuilderException("Operator direction incoherence between "+direction+" and "+t.term.getDirection()+" for priority "+maxpriority, t.place, t.term);
 				}
 			}
-			
 			if(maxpriority==Integer.MIN_VALUE+1) {
 				throw new MExpressionBuilderException("Invalid Expression, operators are probably missing.", 0, null);
 			}
 			
-			// Execute EquationTerms
+			// Get loop information of direction: i, end
 			int i=0;
 			Supplier<Integer> end;
 			if(direction==1) {
@@ -74,6 +81,8 @@ public class MExpressionBuilder {
 				i=compiled.size()-1;
 				end=()->-1;
 			}
+			
+			// Execute EquationTerms
 			for(; i!=end.get(); i+=direction) {
 				CompleteTerm term=compiled.get(i);
 				
@@ -81,28 +90,35 @@ public class MExpressionBuilder {
 				if(term.priority!=maxpriority)continue;
 				
 				// Get arguments
-				int arg_offset[]=term.term.getArgumentsPlaces();
-				int arg_pos[]=new int[arg_offset.length+1];
-				for(int y=0; y<arg_offset.length; y++)arg_pos[y]=arg_offset[y]+i;
-				List<MExpression> arguments=new ArrayList<>();
-				for(int y=0; y<arg_offset.length; y++) {
-					if(arg_pos[y]<0 || arg_pos[y]>=compiled.size() || !compiled.get(arg_pos[y]).isResult())
-						throw new MExpressionBuilderException("Miss an argument around an operator", term.place, term.term);
-					else {
-						arguments.add(compiled.get(arg_pos[y]).result);
+				MExpressionTermArgument[] arguments=term.term.getArgumentsPlaces();
+				
+				List<MExpression<?>> argvalues=new ArrayList<>();
+				List<Integer> arguments_place=new ArrayList<>(arguments.length+1);
+				for(int y=0; y<arguments.length; y++) {
+					int arg_place=arguments[y].getPos()+i;
+					if(arg_place>=0 && arg_place<compiled.size()) {
+						CompleteTerm argterm=compiled.get(arg_place);
+						if(argterm.isResult()) {
+							if(arguments[y].getType().isAssignableFrom(argterm.result.getClass())) {
+								argvalues.add(argterm.result);
+								arguments_place.add(arg_place);
+							}
+							else if(arguments[y].isRequired())throw new MExpressionBuilderException("Bad argument type around an operator", term.place, term.term);
+						}
+						else if(arguments[y].isRequired())throw new MExpressionBuilderException("Not enough arguments around an operator", term.place, term.term);
 					}
+					else if(arguments[y].isRequired())throw new MExpressionBuilderException("Not enough arguments around an operator", term.place, term.term);
 				}
 				
 				// Get result
-				MExpression result=term.term.from(arguments);
+				MExpression<?> result=term.term.from(argvalues);
 				
 				// Replace in compiled
-				arg_pos[arg_pos.length-1]=i;
-
-				Arrays.sort(arg_pos);
-				for(int y=arg_pos.length-1; y>=0; y--) compiled.remove(arg_pos[y]);
-				compiled.add(arg_pos[0], cterm(result));
-				if(direction==1)i-=arg_offset.length;
+				arguments_place.add(i);
+				arguments_place.sort(Integer::compare);
+				for(int y=arguments_place.size()-1; y>=0; y--) compiled.remove(arguments_place.get(y).intValue());
+				compiled.add(arguments_place.get(0), cterm(result));
+				if(direction==1)i-=arguments_place.size()-1;
 			}
 		}
 		return compiled.get(0).result;
@@ -125,9 +141,11 @@ public class MExpressionBuilder {
 		}
 		@Override
 		public String toString() {
-			return "("+term+":"+result+":"+priority+")";
+			if(result==null)return "["+term+";"+priority+"]";
+			else return "("+result.getVisual()+";"+priority+")";
 		}
 	}
+	
 	private CompleteTerm cterm(MExpressionTerm term, int depth, int place) {
 		return new CompleteTerm(term.getPriority()+depth*100000, place, term, null);
 	}
@@ -135,7 +153,6 @@ public class MExpressionBuilder {
 	private CompleteTerm cterm(MExpression mexpression) {
 		return new CompleteTerm(Integer.MIN_VALUE, 0, null, mexpression);
 	}
-	
 	
 	public class MExpressionBuilderException extends Exception{
 		
